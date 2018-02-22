@@ -9,7 +9,7 @@
 set -ex
 
 if [ "$1" = "docker" ]; then
-    TEST_BRANCH=${TEST_BRANCH:-android-7.0.0_r14}
+    TEST_BRANCH=${TEST_BRANCH:-android-7.0.0_r35}
     TEST_URL=${TEST_URL:-https://android.googlesource.com/platform/manifest}
 
     cpus=$(grep ^processor /proc/cpuinfo | wc -l)
@@ -23,12 +23,12 @@ if [ "$1" = "docker" ]; then
 
     source build/envsetup.sh
     lunch aosp_arm-eng
-    make -j $cpus
+    make -j 16
 else
-    aosp_url="https://raw.githubusercontent.com/kylemanna/docker-aosp/master/utils/aosp"
+    aosp_url="https://raw.githubusercontent.com/donatoaz/docker-aosp/master/utils/aosp"
     args="bash run.sh docker"
     export AOSP_EXTRA_ARGS="-v $(cd $(dirname $0) && pwd -P)/$(basename $0):/usr/local/bin/run.sh:ro"
-    export AOSP_IMAGE="kylemanna/aosp:7.0-nougat"
+    export AOSP_IMAGE="donatoaz/android-ndk-gradle-docker"
 
     #
     # Try to invoke the aosp wrapper with the following priority:

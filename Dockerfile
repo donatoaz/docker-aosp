@@ -1,9 +1,10 @@
 #
 # Minimum Docker image to build Android AOSP
 #
-FROM ubuntu:16.04
+# FROM ubuntu:16.04
+FROM donatoaz:android-ndk-gradle-docker
 
-MAINTAINER Kyle Manna <kyle@kylemanna.com>
+MAINTAINER Donato Azevedo <donatoaz@gmail.com>
 
 # /bin/sh points to Dash by default, reconfigure to use bash until Android
 # build becomes POSIX compliant
