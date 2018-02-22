@@ -18,17 +18,19 @@ if [ "$1" = "docker" ]; then
 
     # Use default sync '-j' value embedded in manifest file to be polite
     repo sync
-
-    prebuilts/misc/linux-x86/ccache/ccache -M 10G
+    
+    # for whatever reason, setting the compiler cache below is not working...
+    # prebuilts/misc/linux-x86/ccache/ccache -M 10G
 
     source build/envsetup.sh
     lunch aosp_arm-eng
-    make -j 16
+    
+    make -j $cpus
 else
     aosp_url="https://raw.githubusercontent.com/donatoaz/docker-aosp/master/utils/aosp"
     args="bash run.sh docker"
     export AOSP_EXTRA_ARGS="-v $(cd $(dirname $0) && pwd -P)/$(basename $0):/usr/local/bin/run.sh:ro"
-    export AOSP_IMAGE="donatoaz/android-ndk-gradle-docker"
+    export AOSP_IMAGE="donatoaz/docker-aosp"
 
     #
     # Try to invoke the aosp wrapper with the following priority:
